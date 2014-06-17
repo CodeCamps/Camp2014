@@ -106,12 +106,36 @@ namespace WindowsGame1
 
             if (locBird.X > maxX) { locBird.X = maxX; }
             if (locBird.Y > maxY) { locBird.Y = maxY; }
-            
+
+            locBaddie = new Vector2(locBaddie.X, 200.0f + (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds) * 200.0f);
+
+            var rectBird = texBird.Bounds;
+            rectBird.X = (int)locBird.X;
+            rectBird.Y = (int)locBird.Y;
+
+            var rectBaddie = texBird.Bounds;
+            rectBaddie.X = (int)locBaddie.X;
+            rectBaddie.Y = (int)locBaddie.Y;
+
+            touching = rectBird.Intersects(rectBaddie);
+            if (touching)
+            {
+                GamePad.SetVibration(PlayerIndex.One, 1.0f, 1.0f);
+            }
+            else
+            {
+                GamePad.SetVibration(PlayerIndex.One, 0.0f, 0.0f);
+            }
+
             base.Update(gameTime);
         }
 
         Vector2 locBird = Vector2.Zero;
+        Vector2 locBaddie = Vector2.One * 200.0f;
         bool mirrorBird = false;
+        bool mirrorBaddie = false;
+
+        bool touching = false;
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -136,13 +160,26 @@ namespace WindowsGame1
                 texBird,         // texture
                 locBird,         // location
                 null,            // source rectangle
-                Color.White,     // tint
+                touching? Color.Red : Color.White,     // tint
                 0.0f,            // rotation
                 Vector2.Zero,    // origin
                 1.0f,            // scale
                 mirrorBird ? SpriteEffects.FlipHorizontally : SpriteEffects.None, // flip? 
                 0.0f             // depth
             );
+
+            spriteBatch.Draw(
+                texBird,         // texture
+                locBaddie,         // location
+                null,            // source rectangle
+                Color.Green,     // tint
+                0.0f,            // rotation
+                Vector2.Zero,    // origin
+                1.0f,            // scale
+                mirrorBaddie ? SpriteEffects.FlipHorizontally : SpriteEffects.None, // flip? 
+                0.0f             // depth
+            );
+
             spriteBatch.End();
 
             base.Draw(gameTime);
