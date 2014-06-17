@@ -25,7 +25,11 @@ namespace WindowsGame1
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.IsFullScreen = true;
+
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 480;
+            graphics.IsFullScreen = false;
+
             Content.RootDirectory = "Content";
         }
 
@@ -38,9 +42,12 @@ namespace WindowsGame1
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            rectScreen = this.GraphicsDevice.Viewport.Bounds;
 
             base.Initialize();
         }
+
+        Rectangle rectScreen = Rectangle.Empty;
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -82,7 +89,23 @@ namespace WindowsGame1
             locBird.Y -= gamepad.ThumbSticks.Left.Y * 5.0f;
 
             // Should I mirror my bird?
-            mirrorBird = (gamepad.ThumbSticks.Left.X > 0);
+            if (gamepad.ThumbSticks.Left.X < 0)
+            {
+                mirrorBird = false;
+            }
+            else if (gamepad.ThumbSticks.Left.X > 0)
+            {
+                mirrorBird = true;
+            }
+
+            if (locBird.X < 0.0f) { locBird.X = 0.0f; }
+            if (locBird.Y < 0.0f) { locBird.Y = 0.0f; }
+
+            var maxX = rectScreen.Width - texBird.Width;
+            var maxY = rectScreen.Height - texBird.Height;
+
+            if (locBird.X > maxX) { locBird.X = maxX; }
+            if (locBird.Y > maxY) { locBird.Y = maxY; }
             
             base.Update(gameTime);
         }
@@ -100,11 +123,18 @@ namespace WindowsGame1
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            spriteBatch.Draw(texBarn, Vector2.Zero, Color.White);
+            //spriteBatch.Draw(texBarn, Vector2.Zero, Color.White);
+            spriteBatch.Draw(
+                texBarn,
+                rectScreen, 
+                null, 
+                Color.White
+            );
+            
             //spriteBatch.Draw(texBird, locBird, Color.White);
             spriteBatch.Draw(
-                texBird, // texture
-                locBird, // location
+                texBird,         // texture
+                locBird,         // location
                 null,            // source rectangle
                 Color.White,     // tint
                 0.0f,            // rotation
