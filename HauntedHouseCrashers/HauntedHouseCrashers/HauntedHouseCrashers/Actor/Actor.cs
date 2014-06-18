@@ -18,7 +18,18 @@ namespace HauntedHouseCrashers.Actor
 
         public virtual void Draw(SpriteBatch batch, GameTime gameTime)
         {
-            batch.Draw(Texture, Location, Color.White);
+            var origin = new Vector2(Texture.Width / 2, Texture.Height);
+            batch.Draw(
+                Texture,            // texture
+                Location,           // location
+                null,               // Source Rectangle
+                Color.White,        // tint
+                0.0f,               // rotation
+                origin,             // origin
+                1.0f,               // scale
+                SpriteEffects.None, // flip?
+                0.0f                // depth
+            );
         }
 
         public virtual void MoveActor(Vector2 delta)
@@ -26,13 +37,13 @@ namespace HauntedHouseCrashers.Actor
             Location.X += delta.X;
             Location.Y -= delta.Y;
 
-            float maxX = 800 - Texture.Width;
-            float minY = 512 - Texture.Height - 125;
-            float maxY = 512 - Texture.Height;
+            float maxX = 800;
+            float minY = 512 - 125;
+            float maxY = 512;
 
             float floorHeight = maxY - minY;
             float fromFloorBottom = maxY - Location.Y;
-            float minX = 60.0f * (fromFloorBottom / floorHeight);
+            float minX = 26.0f + 56.0f * (fromFloorBottom / floorHeight);
 
             if (Location.X < minX) { Location.X = minX; }
             if (Location.X > maxX) { Location.X = maxX; }

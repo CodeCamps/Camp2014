@@ -21,8 +21,10 @@ namespace HauntedHouseCrashers
 
         Texture2D texFloor;
         Texture2D texBird;
+        Texture2D texWarrior;
 
         Actor.Actor actBird;
+        Actor.Actor actWarrior;
 
         public Game1()
         {
@@ -56,9 +58,12 @@ namespace HauntedHouseCrashers
 
             // TODO: use this.Content to load your game content here
             texBird = Content.Load<Texture2D>("sprite1");
+            texWarrior = Content.Load<Texture2D>("warrior");
             texFloor = Content.Load<Texture2D>("Floor");
             actBird = new Actor.Actor();
             actBird.Texture = texBird;
+            actWarrior = new Actor.Actor();
+            actWarrior.Texture = texWarrior;
         }
 
         /// <summary>
@@ -84,6 +89,7 @@ namespace HauntedHouseCrashers
             // TODO: Add your update logic here
             var gamepad = GamePad.GetState(PlayerIndex.One);
             actBird.MoveActor(gamepad.ThumbSticks.Left * 3.0f);
+            actWarrior.MoveActor(gamepad.ThumbSticks.Right * 3.0f);
 
             base.Update(gameTime);
         }
@@ -98,8 +104,12 @@ namespace HauntedHouseCrashers
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            spriteBatch.Draw(texFloor, Vector2.Zero, Color.White);
+            var loc = Vector2.Zero;
+            spriteBatch.Draw(texFloor, loc, Color.White);
+            loc.X += 512 - 76; // 76 pixel overlap
+            spriteBatch.Draw(texFloor, loc, Color.Wheat);
             actBird.Draw(spriteBatch, gameTime);
+            actWarrior.Draw(spriteBatch, gameTime);
             spriteBatch.End();
 
             base.Draw(gameTime);
