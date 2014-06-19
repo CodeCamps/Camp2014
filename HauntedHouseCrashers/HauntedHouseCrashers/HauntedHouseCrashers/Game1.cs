@@ -34,6 +34,7 @@ namespace HauntedHouseCrashers
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = 512;
             graphics.PreferredBackBufferWidth = 800;
+            graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
         }
 

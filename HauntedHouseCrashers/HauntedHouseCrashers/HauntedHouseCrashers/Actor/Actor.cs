@@ -10,6 +10,8 @@ namespace HauntedHouseCrashers.Actor
         public Vector2 Location = Vector2.Zero;
         public int Health = 0;
         public Texture2D Texture = null;
+        public List<Texture2D> SpriteNames = new List<Texture2D>();
+        public bool HasShadow = false;
 
         public virtual void Update(GameTime gameTime)
         {
@@ -17,6 +19,29 @@ namespace HauntedHouseCrashers.Actor
 
         public virtual void Draw(SpriteBatch batch, GameTime gameTime)
         {
+            if (HasShadow)
+            {
+                Vector2 origin = new Vector2(
+                    SpriteHelper.SpriteRects["shadow"].Width / 2,
+                    SpriteHelper.SpriteRects["shadow"].Height);
+
+                float minY = 512 - 125;
+                float maxY = 512;
+                float depth = MathHelper.Clamp(1.0f - (Location.Y - minY + 1) / (maxY - minY), 0.0001f, 1.0f);
+
+                batch.Draw(
+                    Texture,            // texture
+                    Location + new Vector2(0, 10),           // location
+                    SpriteHelper.SpriteRects["shadow"], // Source Rectangle
+                    Color.White,        // tint
+                    0.0f,               // rotation
+                    origin,             // origin
+                    1.0f,               // scale
+                    SpriteEffects.None, // flip?
+                    depth + 0.00001f              // depth
+                );
+
+            }
         }
 
         public virtual void MoveActor(Vector2 delta)
