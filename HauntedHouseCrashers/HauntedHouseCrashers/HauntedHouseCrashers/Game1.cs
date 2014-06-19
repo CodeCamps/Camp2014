@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -19,12 +21,13 @@ namespace HauntedHouseCrashers
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Texture2D texSprites;
         Texture2D texFloor;
-        Texture2D texBird;
-        Texture2D texWarrior;
 
-        Actor.Actor actBird;
-        Actor.Actor actWarrior;
+        Actor.Player playerOne;
+        Actor.Player playerTwo;
+        Actor.Player playerThree;
+        Actor.Player playerFour;
 
         public Game1()
         {
@@ -57,13 +60,35 @@ namespace HauntedHouseCrashers
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            texBird = Content.Load<Texture2D>("sprite1");
-            texWarrior = Content.Load<Texture2D>("warrior");
+            texSprites = Content.Load<Texture2D>("HHC");
             texFloor = Content.Load<Texture2D>("Floor");
-            actBird = new Actor.Actor();
-            actBird.Texture = texBird;
-            actWarrior = new Actor.Actor();
-            actWarrior.Texture = texWarrior;
+            
+            string xml = string.Empty;
+            using (StreamReader sr = new StreamReader(@"Content/HHC.xml"))
+            {
+                string line = string.Empty;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    xml += line;
+                }
+            }
+            //System.Diagnostics.Debug.WriteLine(xml);
+            SpriteHelper.ParseRects(xml);
+
+            playerOne = new Actor.Player("blue", PlayerIndex.One);
+            playerTwo = new Actor.Player("yellow", PlayerIndex.Two);
+            playerThree = new Actor.Player("pink", PlayerIndex.Three);
+            playerFour = new Actor.Player("tan", PlayerIndex.Four);
+            
+            playerOne.Texture =
+                playerTwo.Texture =
+                playerThree.Texture =
+                playerFour.Texture = texSprites;
+
+            playerOne.Location.Y = 512 - 1 * (125 / 4);
+            playerTwo.Location.Y = 512 - 2 * (125 / 4);
+            playerThree.Location.Y = 512 - 3 * (125 / 4);
+            playerFour.Location.Y = 512 - 4 * (125 / 4);
         }
 
         /// <summary>
@@ -87,10 +112,11 @@ namespace HauntedHouseCrashers
                 this.Exit();
 
             // TODO: Add your update logic here
-            var gamepad = GamePad.GetState(PlayerIndex.One);
-            actBird.MoveActor(gamepad.ThumbSticks.Left * 3.0f);
-            actWarrior.MoveActor(gamepad.ThumbSticks.Right * 3.0f);
-
+            playerOne.Update(gameTime);
+            playerTwo.Update(gameTime);
+            playerThree.Update(gameTime);
+            playerFour.Update(gameTime);
+            
             base.Update(gameTime);
         }
 
@@ -105,11 +131,16 @@ namespace HauntedHouseCrashers
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             var loc = Vector2.Zero;
-            spriteBatch.Draw(texFloor, loc, Color.White);
+            spriteBatch.Draw(texFloor, loc,null, Color.White, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0.999999f);
             loc.X += 512 - 76; // 76 pixel overlap
-            spriteBatch.Draw(texFloor, loc, Color.Wheat);
-            actBird.Draw(spriteBatch, gameTime);
-            actWarrior.Draw(spriteBatch, gameTime);
+            spriteBatch.Draw(texFloor, loc, null, Color.Wheat, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0.999999f);
+            spriteBatch.End();
+
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+            playerOne.Draw(spriteBatch, gameTime);
+            playerTwo.Draw(spriteBatch, gameTime);
+            playerThree.Draw(spriteBatch, gameTime);
+            playerFour.Draw(spriteBatch, gameTime);
             spriteBatch.End();
 
             base.Draw(gameTime);

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:cc4719591ae7fe82324d86246bfd9f80:d5dddf810f84215459c7a2717d31add9:24c9910cfe307693421f8c8bc9d5f32e$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+-->
+<TextureAtlas imagePath="HHC.png" width="512" height="1024">
+    <sprite n="batFly1" x="2" y="2" w="88" h="37"/>
+    <sprite n="batFly2" x="218" y="233" w="70" h="47"/>
+    <sprite n="beeFly1" x="418" y="613" w="61" h="42"/>
+    <sprite n="beeFly2" x="335" y="696" w="56" h="48"/>
+    <sprite n="blue/alien" x="278" y="580" w="66" h="92"/>
+    <sprite n="blue/alien_badge1" x="392" y="822" w="47" h="47"/>
+    <sprite n="blue/alien_duck" x="2" y="571" w="67" h="72"/>
+    <sprite n="blue/alien_hurt" x="213" y="440" w="67" h="92"/>
+    <sprite n="blue/alien_jump" x="355" y="437" w="66" h="93"/>
+    <sprite n="blue/alien_stand" x="350" y="532" w="66" h="92"/>
+    <sprite n="blue/alien_walk1" x="426" y="399" w="66" h="93"/>
+    <sprite n="blue/alien_walk2" x="72" y="437" w="67" h="96"/>
+    <sprite n="box" x="146" y="176" w="70" h="70"/>
+    <sprite n="boxItem" x="2" y="215" w="70" h="70"/>
+    <sprite n="coinGold" x="74" y="176" w="70" h="70"/>
+    <sprite n="fireball" x="372" y="270" w="70" h="70"/>
+    <sprite n="flyFly1" x="253" y="35" w="72" h="36"/>
+    <sprite n="flyFly2" x="253" y="2" w="75" h="31"/>
+    <sprite n="ghost" x="135" y="736" w="51" h="73"/>
+    <sprite n="green/alien" x="423" y="494" w="66" h="92"/>
+    <sprite n="green/alien_badge1" x="441" y="784" w="47" h="47"/>
+    <sprite n="green/alien_duck" x="145" y="331" w="69" h="71"/>
+    <sprite n="green/alien_hurt" x="2" y="287" w="69" h="92"/>
+    <sprite n="green/alien_jump" x="357" y="342" w="67" h="93"/>
+    <sprite n="green/alien_stand" x="2" y="645" w="66" h="92"/>
+    <sprite n="green/alien_walk1" x="287" y="297" w="68" h="93"/>
+    <sprite n="green/alien_walk2" x="399" y="100" w="70" h="96"/>
+    <sprite n="hud_0" x="467" y="667" w="30" h="38"/>
+    <sprite n="hud_1" x="483" y="588" w="26" h="37"/>
+    <sprite n="hud_2" x="471" y="126" w="32" h="38"/>
+    <sprite n="hud_3" x="362" y="786" w="28" h="38"/>
+    <sprite n="hud_4" x="481" y="627" w="29" h="38"/>
+    <sprite n="hud_5" x="362" y="746" w="28" h="38"/>
+    <sprite n="hud_6" x="471" y="166" w="30" h="38"/>
+    <sprite n="hud_7" x="476" y="85" w="32" h="39"/>
+    <sprite n="hud_8" x="476" y="2" w="32" h="40"/>
+    <sprite n="hud_9" x="476" y="44" w="32" h="39"/>
+    <sprite n="hud_coins" x="392" y="773" w="47" h="47"/>
+    <sprite n="hud_heartEmpty" x="448" y="737" w="53" h="45"/>
+    <sprite n="hud_heartFull" x="393" y="726" w="53" h="45"/>
+    <sprite n="hud_heartHalf" x="207" y="712" w="53" h="45"/>
+    <sprite n="hud_x" x="464" y="707" w="30" h="28"/>
+    <sprite n="mouseWalk1" x="407" y="657" w="58" h="35"/>
+    <sprite n="mouseWalk2" x="346" y="626" w="59" h="35"/>
+    <sprite n="pink/alien" x="71" y="609" w="66" h="92"/>
+    <sprite n="pink/alien_badge1" x="313" y="746" w="47" h="47"/>
+    <sprite n="pink/alien_duck" x="216" y="282" w="69" h="71"/>
+    <sprite n="pink/alien_hurt" x="74" y="248" w="69" h="92"/>
+    <sprite n="pink/alien_jump" x="2" y="476" w="67" h="93"/>
+    <sprite n="pink/alien_stand" x="140" y="558" w="66" h="92"/>
+    <sprite n="pink/alien_walk1" x="2" y="381" w="68" h="93"/>
+    <sprite n="pink/alien_walk2" x="327" y="55" w="70" h="96"/>
+    <sprite n="ropeVertical" x="300" y="225" w="70" h="70"/>
+    <sprite n="selectAlien" x="2" y="41" w="80" h="100"/>
+    <sprite n="shadow" x="92" y="2" w="80" h="100"/>
+    <sprite n="signRight" x="228" y="161" w="70" h="70"/>
+    <sprite n="slimeBlueWalk1" x="405" y="694" w="57" h="30"/>
+    <sprite n="slimeBlueWalk2" x="188" y="759" w="49" h="34"/>
+    <sprite n="slimeGreenWalk1" x="276" y="674" w="57" h="30"/>
+    <sprite n="slimeGreenWalk2" x="262" y="739" w="49" h="34"/>
+    <sprite n="slimePinkWalk1" x="2" y="764" w="50" h="28"/>
+    <sprite n="slimePinkWalk2" x="67" y="753" w="51" h="26"/>
+    <sprite n="snailWalk1" x="276" y="706" w="54" h="31"/>
+    <sprite n="snailWalk2" x="346" y="663" w="57" h="31"/>
+    <sprite n="snakeWalk1" x="418" y="588" w="63" h="23"/>
+    <sprite n="snakeWalk2" x="2" y="739" w="63" h="23"/>
+    <sprite n="spider" x="174" y="57" w="71" h="45"/>
+    <sprite n="spiderWalk1" x="330" y="2" w="72" h="51"/>
+    <sprite n="spiderWalk2" x="174" y="2" w="77" h="53"/>
+    <sprite n="tan/alien" x="210" y="534" w="66" h="92"/>
+    <sprite n="tan/alien_badge1" x="463" y="255" w="47" h="47"/>
+    <sprite n="tan/alien_duck" x="71" y="535" w="67" h="72"/>
+    <sprite n="tan/alien_hurt" x="286" y="392" w="67" h="92"/>
+    <sprite n="tan/alien_jump" x="444" y="304" w="66" h="93"/>
+    <sprite n="tan/alien_stand" x="282" y="486" w="66" h="92"/>
+    <sprite n="tan/alien_walk1" x="73" y="342" w="68" h="93"/>
+    <sprite n="tan/alien_walk2" x="404" y="2" w="70" h="96"/>
+    <sprite n="tochLit1" x="156" y="104" w="70" h="70"/>
+    <sprite n="tochLit2" x="2" y="143" w="70" h="70"/>
+    <sprite n="torch" x="84" y="104" w="70" h="70"/>
+    <sprite n="weight" x="391" y="198" w="70" h="70"/>
+    <sprite n="window" x="319" y="153" w="70" h="70"/>
+    <sprite n="wormWalk1" x="70" y="728" w="63" h="23"/>
+    <sprite n="wormWalk2" x="70" y="703" w="63" h="23"/>
+    <sprite n="yellow/alien" x="139" y="652" w="66" h="82"/>
+    <sprite n="yellow/alien_badge1" x="463" y="206" w="47" h="47"/>
+    <sprite n="yellow/alien_duck" x="143" y="404" w="68" h="67"/>
+    <sprite n="yellow/alien_hurt" x="145" y="248" w="69" h="81"/>
+    <sprite n="yellow/alien_jump" x="141" y="473" w="67" h="83"/>
+    <sprite n="yellow/alien_stand" x="208" y="628" w="66" h="82"/>
+    <sprite n="yellow/alien_walk1" x="216" y="355" w="68" h="83"/>
+    <sprite n="yellow/alien_walk2" x="247" y="73" w="70" h="86"/>
+</TextureAtlas>
