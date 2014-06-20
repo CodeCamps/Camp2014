@@ -37,6 +37,10 @@ namespace HauntedHouseCrashers.Actor
                 {
                     // Do Nothing;
                 }
+                else if (enemy is Ghost)
+                {
+                    // Do Nothing
+                }
                 else if (enemy.Bounds.Intersects(this.Bounds))
                 {
                     enemy.Health--;

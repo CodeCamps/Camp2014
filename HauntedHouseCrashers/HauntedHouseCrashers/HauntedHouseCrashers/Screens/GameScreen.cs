@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace HauntedHouseCrashers.Screens
 {
@@ -20,12 +21,15 @@ namespace HauntedHouseCrashers.Screens
         List<Actor.Player> Players = new List<Actor.Player>();
         public static List<Actor.Actor> Enemies = new List<Actor.Actor>();
 
+        public Song musicLoop;
+
         public override void LoadContent(ContentManager content)
         {
             base.LoadContent(content);
 
             texSprites = content.Load<Texture2D>("HHC");
             texFloor = content.Load<Texture2D>("Floor");
+            musicLoop = content.Load<Song>("music");
 
             string xml = string.Empty;
             using (StreamReader sr = new StreamReader(@"Content/HHC.xml"))
@@ -40,11 +44,17 @@ namespace HauntedHouseCrashers.Screens
             SpriteHelper.ParseRects(xml);
         }
 
+        public bool IsInitialized = false;
+
         public override void Update(GameTime gameTime)
         {
-            if (Players.Count == 0)
+            if (!IsInitialized && Players.Count == 0)
             {
+                MediaPlayer.IsRepeating = true;
+                MediaPlayer.Play(musicLoop);
+
                 // init players
+                int playerCount = 0;
                 Actor.Player player;
                 if (GamePad.GetState(PlayerIndex.One).IsConnected)
                 {
@@ -52,6 +62,7 @@ namespace HauntedHouseCrashers.Screens
                     player.Texture = texSprites;
                     player.Location.Y = 512 - 3 * (125 / 4);
                     Players.Add(player);
+                    playerCount++;
                 }
                 if (GamePad.GetState(PlayerIndex.Two).IsConnected)
                 {
@@ -59,6 +70,7 @@ namespace HauntedHouseCrashers.Screens
                     player.Texture = texSprites;
                     player.Location.Y = 512 - 2 * (125 / 4);
                     Players.Add(player);
+                    playerCount++;
                 }
                 if (GamePad.GetState(PlayerIndex.Three).IsConnected)
                 {
@@ -66,6 +78,7 @@ namespace HauntedHouseCrashers.Screens
                     player.Texture = texSprites;
                     player.Location.Y = 512 - 4 * (125 / 4);
                     Players.Add(player);
+                    playerCount++;
                 }
                 if (GamePad.GetState(PlayerIndex.Four).IsConnected)
                 {
@@ -73,22 +86,48 @@ namespace HauntedHouseCrashers.Screens
                     player.Texture = texSprites;
                     player.Location.Y = 512 - 1 * (125 / 4);
                     Players.Add(player);
+                    playerCount++;
                 }
 
-                var bee = new Actor.NpcBee();
-                bee.Location = new Vector2(800 - 90, 512 - 80);
-                bee.Texture = texSprites;
-                Enemies.Add(bee);
+                if (playerCount == 1)
+                {
+                    Players[0].Health = 4;
+                }
+                else if (playerCount == 2)
+                {
+                    Players[0].Health = 3;
+                    Players[1].Health = 3;
+                }
+                else if (playerCount == 3)
+                {
+                    Players[0].Health = 2;
+                    Players[1].Health = 2;
+                    Players[2].Health = 2;
+                }
+                else if (playerCount == 4)
+                {
+                    Players[0].Health = 1;
+                    Players[1].Health = 1;
+                    Players[2].Health = 1;
+                    Players[3].Health = 1;
+                }
+
+                //var bee = new Actor.NpcBee();
+                //bee.Location = new Vector2(800 - 90, 512 - 80);
+                //bee.Texture = texSprites;
+                //Enemies.Add(bee);
                 
-                var fly = new Actor.NpcFly();
-                fly.Location = new Vector2(800 - 50, 512 - 40);
-                fly.Texture = texSprites;
-                Enemies.Add(fly);
+                //var fly = new Actor.NpcFly();
+                //fly.Location = new Vector2(800 - 50, 512 - 40);
+                //fly.Texture = texSprites;
+                //Enemies.Add(fly);
                 
-                var bat = new Actor.NpcBat();
-                bat.Location = new Vector2(800 - 130, 512 - 120);
-                bat.Texture = texSprites;
-                Enemies.Add(bat);
+                //var bat = new Actor.NpcBat();
+                //bat.Location = new Vector2(800 - 130, 512 - 120);
+                //bat.Texture = texSprites;
+                //Enemies.Add(bat);
+
+                IsInitialized = true;
             }
 
             foreach (var player in Players)
@@ -96,9 +135,33 @@ namespace HauntedHouseCrashers.Screens
                 player.Update(gameTime);
             }
 
+
             foreach (var obj in Enemies)
             {
                 obj.Update(gameTime);
+                if (obj is Actor.Fireball)
+                {
+                    // do nothing
+                }
+                else if (obj is Actor.Ghost)
+                {
+                    // do nothing
+                }
+                else
+                {
+                    foreach (var p in Players)
+                    {
+                        if (obj.Bounds.Intersects(p.Bounds))
+                        {
+                            p.Health--;
+                            obj.ReadyToRemove = true;
+                            if (p.Health < 1)
+                            {
+                                p.ReadyToRemove = true;
+                            }
+                        }
+                    }
+                }
             }
 
             for (int i = 0; i < Enemies.Count; )
@@ -106,6 +169,22 @@ namespace HauntedHouseCrashers.Screens
                 if (Enemies[i].ReadyToRemove)
                 {
                     Enemies.RemoveAt(i);
+                }
+                else
+                {
+                    i++;
+                }
+            }
+
+            for (int i = 0; i < Players.Count; )
+            {
+                if (Players[i].ReadyToRemove)
+                {
+                    var ghost = new Actor.Ghost();
+                    ghost.Location = Players[i].Location;
+                    ghost.Texture = Players[i].Texture;
+                    Enemies.Add(ghost);
+                    Players.RemoveAt(i);
                 }
                 else
                 {
@@ -197,13 +276,6 @@ namespace HauntedHouseCrashers.Screens
                         break;
                 }
             }
-
-
-
-
-
-
-
         }
 
         public override void Draw(SpriteBatch batch, GameTime gameTime)

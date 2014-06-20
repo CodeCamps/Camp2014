@@ -13,6 +13,7 @@ namespace HauntedHouseCrashers.Actor
         public NpcBee() : base(new string[] {"beeFly1", "beeFly2"}) 
         {
             this.Health = 2;
+            this.Movement.X = -0.5f;
         }
     }
 }

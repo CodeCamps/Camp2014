@@ -23,7 +23,7 @@ namespace HauntedHouseCrashers.Actor
         public int Score { get; set; }
 
         public double fireballCoolDown = 0.0;
-        public double FIREBALL_DELAY = 1.0;
+        public double FIREBALL_DELAY = 0.5;
 
         public GamePadState gamepadPrev;
         public override void Update(GameTime gameTime)

@@ -23,6 +23,8 @@ namespace HauntedHouseCrashers.Actor
         public bool IsJumping = false;
         public bool IsMirrored = false;
 
+        protected bool IsWalker = false;
+
         public int VerticalLocation = 0;
         public double JumpElapsed = 0;
         public double JUMP_DURATION = 1.0;
@@ -43,14 +45,14 @@ namespace HauntedHouseCrashers.Actor
 
                 var bounds = SpriteHelper.SpriteRects[SpriteNameJumping];
                 bounds.X = (int)(Location.X - bounds.Width / 2);
-                bounds.Y = (int)(Location.Y - bounds.Height - VerticalLocation);
+                bounds.Y = (int)(Location.Y - bounds.Height - (IsWalker ? 0 : VerticalLocation));
                 this.Bounds = bounds;
             }
             else if (IsWalking)
             {
                 var bounds = SpriteHelper.SpriteRects[SpriteNamesWalking[WalkFrame]];
                 bounds.X = (int)(Location.X - bounds.Width / 2);
-                bounds.Y = (int)(Location.Y - bounds.Height - VerticalLocation);
+                bounds.Y = (int)(Location.Y - bounds.Height - (IsWalker ? 0 : VerticalLocation));
                 this.Bounds = bounds;
 
                 WalkElapsed -= gameTime.ElapsedGameTime.TotalSeconds;
@@ -59,6 +61,13 @@ namespace HauntedHouseCrashers.Actor
                     WalkFrame = (WalkFrame + 1) % SpriteNamesWalking.Count;
                     WalkElapsed = WALK_DELAY;
                 }
+            }
+            else
+            {
+                var bounds = SpriteHelper.SpriteRects[SpriteNameStanding];
+                bounds.X = (int)(Location.X - bounds.Width / 2);
+                bounds.Y = (int)(Location.Y - bounds.Height - (IsWalker ? 0 : VerticalLocation));
+                this.Bounds = bounds;
             }
 
             base.Update(gameTime);
@@ -78,7 +87,7 @@ namespace HauntedHouseCrashers.Actor
                     SpriteHelper.SpriteRects[SpriteNameJumping].Width / 2,
                     SpriteHelper.SpriteRects[SpriteNameJumping].Height);
                 var loc = Location;
-                loc.Y -= VerticalLocation;
+                loc.Y -= IsWalker ? 0 : VerticalLocation;
                 batch.Draw(
                     Texture,            // texture
                     loc,           // location
@@ -97,7 +106,7 @@ namespace HauntedHouseCrashers.Actor
                     SpriteHelper.SpriteRects[SpriteNamesWalking[WalkFrame]].Width / 2,
                     SpriteHelper.SpriteRects[SpriteNamesWalking[WalkFrame]].Height);
                 var loc = Location;
-                loc.Y -= VerticalLocation;
+                loc.Y -= IsWalker ? 0 : VerticalLocation;
                 batch.Draw(
                     Texture,            // texture
                     loc,           // location

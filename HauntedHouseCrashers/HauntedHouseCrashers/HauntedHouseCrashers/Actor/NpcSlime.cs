@@ -10,6 +10,8 @@ namespace HauntedHouseCrashers.Actor
         public NpcSlime()
             : base(new string[] { "slimeGreenWalk1", "slimeGreenWalk2" })
         {
+            this.Movement.X = -0.4f;
+
             int rand = _rand.Next(3);
             if (rand == 1)
             {

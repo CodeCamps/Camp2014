@@ -10,6 +10,7 @@ namespace HauntedHouseCrashers.Actor
         public NpcBat() : base(new string[] {"batFly1", "batFly2"}) 
         {
             this.Health = 3;
+            this.Movement.X = -1.0f;
         }
     }
 }

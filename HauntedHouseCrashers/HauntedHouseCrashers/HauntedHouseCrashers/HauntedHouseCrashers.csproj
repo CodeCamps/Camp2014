@@ -75,6 +75,7 @@
     <Compile Include="Actor\Actor.cs" />
     <Compile Include="Actor\Character.cs" />
     <Compile Include="Actor\Fireball.cs" />
+    <Compile Include="Actor\Ghost.cs" />
     <Compile Include="Actor\NpcBat.cs" />
     <Compile Include="Actor\NpcBee.cs" />
     <Compile Include="Actor\NpcFliers.cs" />
