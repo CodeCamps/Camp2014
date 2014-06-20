@@ -136,40 +136,73 @@ namespace HauntedHouseCrashers.Screens
 
         public void CreateNewWave()
         {
-            var bee = new Actor.NpcBee();
-            bee.Location = new Vector2(800 + 20, 512 - 80);
-            bee.Texture = texSprites;
-            Enemies.Add(bee);
+            List<Vector2> locations = new List<Vector2>();
+            locations.Add(new Vector2(800 + 20, 512 - 80));
+            locations.Add(new Vector2(800 + 40, 512 - 40));
+            locations.Add(new Vector2(800 + 30, 512 - 120));
+            locations.Add(new Vector2(800 + 120, 512 - 80));
+            locations.Add(new Vector2(800 + 140, 512 - 40));
+            locations.Add(new Vector2(800 + 130, 512 - 120));
+            locations.Add(new Vector2(800, 512 - 60));
 
-            var fly = new Actor.NpcFly();
-            fly.Location = new Vector2(800 + 40, 512 - 40);
-            fly.Texture = texSprites;
-            Enemies.Add(fly);
+            var _rand = new Random();
+            for (int i = 0; i < 7; i++)
+            {
+                var rand = _rand.Next(7);
 
-            var bat = new Actor.NpcBat();
-            bat.Location = new Vector2(800 + 30, 512 - 120);
-            bat.Texture = texSprites;
-            Enemies.Add(bat);
+                switch (rand)
+                {
+                    case 0:
+                        var bee = new Actor.NpcBee();
+                        bee.Location = locations[i];
+                        bee.Texture = texSprites;
+                        Enemies.Add(bee);
+                        break;
+                    case 1:
+                        var fly = new Actor.NpcFly();
+                        fly.Location = locations[i];
+                        fly.Texture = texSprites;
+                        Enemies.Add(fly);
+                        break;
+                    case 2:
+                        var bat = new Actor.NpcBat();
+                        bat.Location = locations[i];
+                        bat.Texture = texSprites;
+                        Enemies.Add(bat);
+                        break;
+                    case 3:
+                        var mouse = new Actor.NpcMouse();
+                        mouse.Location = locations[i];
+                        mouse.Texture = texSprites;
+                        Enemies.Add(mouse);
+                        break;
+                    case 4:
+                        var snake = new Actor.NpcSnake();
+                        snake.Location = locations[i];
+                        snake.Texture = texSprites;
+                        Enemies.Add(snake);
+                        break;
+                    case 5:
+                        var slime = new Actor.NpcSlime();
+                        slime.Location = locations[i];
+                        slime.Texture = texSprites;
+                        Enemies.Add(slime);
+                        break;
+                    case 6:
+                    default:
+                        var spider = new Actor.NpcSpider();
+                        spider.Location = locations[i];
+                        spider.Texture = texSprites;
+                        Enemies.Add(spider);
+                        break;
+                }
+            }
 
-            bee = new Actor.NpcBee();
-            bee.Location = new Vector2(800 + 120, 512 - 80);
-            bee.Texture = texSprites;
-            Enemies.Add(bee);
 
-            fly = new Actor.NpcFly();
-            fly.Location = new Vector2(800 + 140, 512 - 40);
-            fly.Texture = texSprites;
-            Enemies.Add(fly);
 
-            bat = new Actor.NpcBat();
-            bat.Location = new Vector2(800 + 130, 512 - 120);
-            bat.Texture = texSprites;
-            Enemies.Add(bat);
 
-            var spider = new Actor.NpcSpider();
-            spider.Location = new Vector2(800, 512 - 60);
-            spider.Texture = texSprites;
-            Enemies.Add(spider);
+
+
 
         }
 

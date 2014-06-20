@@ -61,7 +61,8 @@ namespace HauntedHouseCrashers.Actor
             fireballCoolDown -= gameTime.ElapsedGameTime.TotalSeconds;
             if (gamepad.Buttons.B == ButtonState.Pressed && fireballCoolDown <= 0.0)
             {
-                var fireball = new Fireball(new Vector2(5, 0));
+                var speed = IsMirrored ? -5 : 5;
+                var fireball = new Fireball(new Vector2(speed, 0));
                 fireball.Texture = this.Texture;
                 fireball.Location = new Vector2(
                     this.Location.X,

@@ -26,7 +26,7 @@ namespace HauntedHouseCrashers.Actor
             base.Update(gameTime);
 
             Location += Movement;
-            if (Location.X > 800)
+            if (Location.X > 800 || Location.X < -80)
             {
                 ReadyToRemove = true;
             }

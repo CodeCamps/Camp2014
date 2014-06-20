@@ -79,6 +79,9 @@
     <Compile Include="Actor\NpcBee.cs" />
     <Compile Include="Actor\NpcFliers.cs" />
     <Compile Include="Actor\NpcFly.cs" />
+    <Compile Include="Actor\NpcMouse.cs" />
+    <Compile Include="Actor\NpcSlime.cs" />
+    <Compile Include="Actor\NpcSnake.cs" />
     <Compile Include="Actor\NpcSpider.cs" />
     <Compile Include="Actor\NpcWalkers.cs" />
     <Compile Include="Actor\Player.cs" />
