@@ -7,6 +7,8 @@ namespace HauntedHouseCrashers.Actor
 {
     public class Actor
     {
+        protected static Random _rand = new Random();
+
         public Vector2 Location = Vector2.Zero;
         public int Health = 0;
         public Texture2D Texture = null;

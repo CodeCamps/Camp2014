@@ -21,20 +21,12 @@ namespace HauntedHouseCrashers
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Texture2D texSprites;
-        Texture2D texFloor;
-
-        Actor.Player playerOne;
-        Actor.Player playerTwo;
-        Actor.Player playerThree;
-        Actor.Player playerFour;
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = 512;
             graphics.PreferredBackBufferWidth = 800;
-            graphics.IsFullScreen = true;
+            //graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
         }
 
@@ -59,37 +51,8 @@ namespace HauntedHouseCrashers
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
-            texSprites = Content.Load<Texture2D>("HHC");
-            texFloor = Content.Load<Texture2D>("Floor");
-            
-            string xml = string.Empty;
-            using (StreamReader sr = new StreamReader(@"Content/HHC.xml"))
-            {
-                string line = string.Empty;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    xml += line;
-                }
-            }
-            //System.Diagnostics.Debug.WriteLine(xml);
-            SpriteHelper.ParseRects(xml);
-
-            playerOne = new Actor.Player("blue", PlayerIndex.One);
-            playerTwo = new Actor.Player("yellow", PlayerIndex.Two);
-            playerThree = new Actor.Player("pink", PlayerIndex.Three);
-            playerFour = new Actor.Player("tan", PlayerIndex.Four);
-            
-            playerOne.Texture =
-                playerTwo.Texture =
-                playerThree.Texture =
-                playerFour.Texture = texSprites;
-
-            playerOne.Location.Y = 512 - 1 * (125 / 4);
-            playerTwo.Location.Y = 512 - 2 * (125 / 4);
-            playerThree.Location.Y = 512 - 3 * (125 / 4);
-            playerFour.Location.Y = 512 - 4 * (125 / 4);
+            Screens.ScreenManager.Content = Content;
+            Screens.ScreenManager.ShowScreen(new Screens.GameScreen());
         }
 
         /// <summary>
@@ -112,12 +75,11 @@ namespace HauntedHouseCrashers
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                this.Exit();
+
             // TODO: Add your update logic here
-            playerOne.Update(gameTime);
-            playerTwo.Update(gameTime);
-            playerThree.Update(gameTime);
-            playerFour.Update(gameTime);
-            
+            Screens.ScreenManager.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -130,20 +92,7 @@ namespace HauntedHouseCrashers
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
-            var loc = Vector2.Zero;
-            spriteBatch.Draw(texFloor, loc,null, Color.White, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0.999999f);
-            loc.X += 512 - 76; // 76 pixel overlap
-            spriteBatch.Draw(texFloor, loc, null, Color.Wheat, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0.999999f);
-            spriteBatch.End();
-
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
-            playerOne.Draw(spriteBatch, gameTime);
-            playerTwo.Draw(spriteBatch, gameTime);
-            playerThree.Draw(spriteBatch, gameTime);
-            playerFour.Draw(spriteBatch, gameTime);
-            spriteBatch.End();
-
+            Screens.ScreenManager.Draw(spriteBatch, gameTime);
             base.Draw(gameTime);
         }
     }
