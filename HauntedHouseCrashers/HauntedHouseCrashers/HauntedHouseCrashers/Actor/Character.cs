@@ -24,7 +24,6 @@ namespace HauntedHouseCrashers.Actor
         public bool IsMirrored = false;
 
         public int VerticalLocation = 0;
-
         public double JumpElapsed = 0;
         public double JUMP_DURATION = 1.0;
         public float JUMP_HEIGHT = 75;
@@ -41,9 +40,19 @@ namespace HauntedHouseCrashers.Actor
             {
                 VerticalLocation = (int)Math.Round(Math.Sin(JumpElapsed * Math.PI) * JUMP_HEIGHT);
                 JumpElapsed -= gameTime.ElapsedGameTime.TotalSeconds;
+
+                var bounds = SpriteHelper.SpriteRects[SpriteNameJumping];
+                bounds.X = (int)(Location.X - bounds.Width / 2);
+                bounds.Y = (int)(Location.Y - bounds.Height - VerticalLocation);
+                this.Bounds = bounds;
             }
             else if (IsWalking)
             {
+                var bounds = SpriteHelper.SpriteRects[SpriteNamesWalking[WalkFrame]];
+                bounds.X = (int)(Location.X - bounds.Width / 2);
+                bounds.Y = (int)(Location.Y - bounds.Height - VerticalLocation);
+                this.Bounds = bounds;
+
                 WalkElapsed -= gameTime.ElapsedGameTime.TotalSeconds;
                 if (WalkElapsed < 0)
                 {

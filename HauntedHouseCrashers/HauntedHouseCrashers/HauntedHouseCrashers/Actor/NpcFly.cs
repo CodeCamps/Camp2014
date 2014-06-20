@@ -8,11 +8,10 @@ using Microsoft.Xna.Framework.Input;
 
 namespace HauntedHouseCrashers.Actor
 {
-    public class NpcBee : NpcFliers
+    public class NpcFly : NpcFliers
     {
-        public NpcBee() : base(new string[] {"beeFly1", "beeFly2"}) 
+        public NpcFly() : base(new string[] {"flyFly1", "flyFly2"}) 
         {
-            this.Health = 2;
         }
     }
 }

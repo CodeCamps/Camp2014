@@ -15,8 +15,10 @@ namespace HauntedHouseCrashers.Screens
         Texture2D texSprites;
         Texture2D texFloor;
 
+        public static bool IsDebug = false;
+
         List<Actor.Player> Players = new List<Actor.Player>();
-        List<Actor.NpcBee> Bees = new List<Actor.NpcBee>();
+        public static List<Actor.Actor> Enemies = new List<Actor.Actor>();
 
         public override void LoadContent(ContentManager content)
         {
@@ -76,17 +78,17 @@ namespace HauntedHouseCrashers.Screens
                 var bee = new Actor.NpcBee();
                 bee.Location = new Vector2(800 - 90, 512 - 80);
                 bee.Texture = texSprites;
-                Bees.Add(bee);
+                Enemies.Add(bee);
                 
-                bee = new Actor.NpcBee();
-                bee.Location = new Vector2(800 - 50, 512 - 40);
-                bee.Texture = texSprites;
-                Bees.Add(bee);
+                var fly = new Actor.NpcFly();
+                fly.Location = new Vector2(800 - 50, 512 - 40);
+                fly.Texture = texSprites;
+                Enemies.Add(fly);
                 
-                bee = new Actor.NpcBee();
-                bee.Location = new Vector2(800 - 130, 512 - 120);
-                bee.Texture = texSprites;
-                Bees.Add(bee);
+                var bat = new Actor.NpcBat();
+                bat.Location = new Vector2(800 - 130, 512 - 120);
+                bat.Texture = texSprites;
+                Enemies.Add(bat);
             }
 
             foreach (var player in Players)
@@ -94,12 +96,81 @@ namespace HauntedHouseCrashers.Screens
                 player.Update(gameTime);
             }
 
-            foreach (var bee in Bees)
+            foreach (var obj in Enemies)
             {
-                bee.Update(gameTime);
+                obj.Update(gameTime);
+            }
+
+            for (int i = 0; i < Enemies.Count; )
+            {
+                if (Enemies[i].ReadyToRemove)
+                {
+                    Enemies.RemoveAt(i);
+                }
+                else
+                {
+                    i++;
+                }
+            }
+
+            var enemyCount = 0;
+            foreach (var enemy in Enemies)
+            {
+                if (enemy is Actor.Fireball)
+                {
+                    // ignore
+                }
+                else
+                {
+                    enemyCount++;
+                }
+            }
+
+            if (enemyCount < 1)
+            {
+                CreateNewWave();
             }
 
             base.Update(gameTime);
+        }
+
+        public void CreateNewWave()
+        {
+            var bee = new Actor.NpcBee();
+            bee.Location = new Vector2(800 + 20, 512 - 80);
+            bee.Texture = texSprites;
+            Enemies.Add(bee);
+
+            var fly = new Actor.NpcFly();
+            fly.Location = new Vector2(800 + 40, 512 - 40);
+            fly.Texture = texSprites;
+            Enemies.Add(fly);
+
+            var bat = new Actor.NpcBat();
+            bat.Location = new Vector2(800 + 30, 512 - 120);
+            bat.Texture = texSprites;
+            Enemies.Add(bat);
+
+            bee = new Actor.NpcBee();
+            bee.Location = new Vector2(800 + 120, 512 - 80);
+            bee.Texture = texSprites;
+            Enemies.Add(bee);
+
+            fly = new Actor.NpcFly();
+            fly.Location = new Vector2(800 + 140, 512 - 40);
+            fly.Texture = texSprites;
+            Enemies.Add(fly);
+
+            bat = new Actor.NpcBat();
+            bat.Location = new Vector2(800 + 130, 512 - 120);
+            bat.Texture = texSprites;
+            Enemies.Add(bat);
+
+            var spider = new Actor.NpcSpider();
+            spider.Location = new Vector2(800, 512 - 60);
+            spider.Texture = texSprites;
+            Enemies.Add(spider);
+
         }
 
         public override void Draw(SpriteBatch batch, GameTime gameTime)
@@ -111,7 +182,7 @@ namespace HauntedHouseCrashers.Screens
             loc.X += 512 - 76; // 76 pixel overlap
             batch.Draw(texFloor, loc, null, Color.White, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0.999999f);
             loc.X += 512 - 76; // 76 pixel overlap
-            batch.Draw(texFloor, loc, null, Color.Gray, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0.999999f);
+            batch.Draw(texFloor, loc, null, Color.LightGray, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0.999999f);
             batch.End();
 
             batch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
@@ -120,10 +191,10 @@ namespace HauntedHouseCrashers.Screens
             {
                 player.Draw(batch, gameTime);
             }
-            
-            foreach (var bee in Bees)
+
+            foreach (var obj in Enemies)
             {
-                bee.Draw(batch, gameTime);
+                obj.Draw(batch, gameTime);
             }
             
             batch.End();

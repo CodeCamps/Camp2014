@@ -10,10 +10,12 @@ namespace HauntedHouseCrashers.Actor
         protected static Random _rand = new Random();
 
         public Vector2 Location = Vector2.Zero;
-        public int Health = 0;
+        public int Health = 1;
         public Texture2D Texture = null;
         public List<Texture2D> SpriteNames = new List<Texture2D>();
         public bool HasShadow = false;
+        public bool ReadyToRemove = false;
+        public Rectangle Bounds { get; set; }
 
         public virtual void Update(GameTime gameTime)
         {
@@ -21,6 +23,12 @@ namespace HauntedHouseCrashers.Actor
 
         public virtual void Draw(SpriteBatch batch, GameTime gameTime)
         {
+            if (Screens.GameScreen.IsDebug)
+            {
+                var trans = new Color(1.0f, 0.0f, 0.0f, 0.25f);
+                batch.Draw(Texture, this.Bounds, SpriteHelper.SpriteRects["selectAlien"], trans);
+            }
+
             if (HasShadow)
             {
                 Vector2 origin = new Vector2(

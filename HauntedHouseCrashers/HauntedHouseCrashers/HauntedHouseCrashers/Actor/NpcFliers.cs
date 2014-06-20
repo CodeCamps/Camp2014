@@ -11,6 +11,7 @@ namespace HauntedHouseCrashers.Actor
     public class NpcFliers : Character
     {
         public double randRate = 0;
+        public Vector2 Movement = new Vector2(-0.8f, 0);
 
         public NpcFliers() : base()
         {
@@ -41,6 +42,12 @@ namespace HauntedHouseCrashers.Actor
 
         public override void Update(GameTime gameTime)
         {
+            Location += Movement;
+            if (Location.X < -100)
+            {
+                ReadyToRemove = true;
+            }
+
             VerticalLocation = (int)(75.0 + 50.0 * Math.Sin(gameTime.TotalGameTime.TotalSeconds * (randRate + 0.5)));
             base.Update(gameTime);
         }

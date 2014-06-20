@@ -20,6 +20,10 @@ namespace HauntedHouseCrashers.Actor
         }
 
         public PlayerIndex PlayerIndex { get; set; }
+        public int Score { get; set; }
+
+        public double fireballCoolDown = 0.0;
+        public double FIREBALL_DELAY = 1.0;
 
         public GamePadState gamepadPrev;
         public override void Update(GameTime gameTime)
@@ -52,9 +56,27 @@ namespace HauntedHouseCrashers.Actor
                 IsMirrored = true;
             }
 
-            VerticalLocation = 0;
-
             base.Update(gameTime);
+
+            fireballCoolDown -= gameTime.ElapsedGameTime.TotalSeconds;
+            if (gamepad.Buttons.B == ButtonState.Pressed && fireballCoolDown <= 0.0)
+            {
+                var fireball = new Fireball(new Vector2(5, 0));
+                fireball.Texture = this.Texture;
+                fireball.Location = new Vector2(
+                    this.Location.X,
+                    this.Location.Y // - VerticalLocation // + 0.00001f
+                );
+                fireball.VerticalLocation =
+                    //(int)this.Location.Y -
+                    SpriteHelper.SpriteRects[this.SpriteNameStanding].Height / 2;
+                fireball.Player = this.PlayerIndex;
+                Screens.GameScreen.Enemies.Add(fireball);
+                fireballCoolDown = FIREBALL_DELAY;
+            }
+
+            //VerticalLocation = 0;
+
         }
 
         public override void Draw(SpriteBatch batch, GameTime gameTime)
